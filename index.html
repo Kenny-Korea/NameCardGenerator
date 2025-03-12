@@ -1,221 +1,222 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link
-      rel="stylesheet"
-      as="style"
-      crossorigin
-      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
-    />
-    <style>
-      @page {
-        size: A4;
-        margin: 0;
-      }
 
-      @font-face {
-        font-family: "Pretendard-Regular";
-        src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
-          format("woff");
-        font-weight: 400;
-        font-style: normal;
+<head>
+  <link rel="stylesheet" as="style" crossorigin
+    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
+    @font-face {
+      font-family: "Pretendard-Regular";
+      src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff") format("woff");
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+    }
+
+    .nametag-container {
+      display: grid;
+      grid-template-columns: repeat(2, 90mm);
+      gap: 0;
+      width: 210mm;
+    }
+
+    .nametag {
+      height: 60mm;
+      border: 1px dashed #cccccc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      page-break-inside: avoid;
+      margin: 0;
+      padding: 2mm;
+      box-sizing: border-box;
+    }
+
+    @media print {
+
+      html,
+      body {
+        width: 210mm;
+        height: 297mm;
       }
 
       body {
         margin: 0;
-        padding: 0;
-        font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
-      }
-
-      .nametag-container {
-        display: grid;
-        grid-template-columns: repeat(2, 90mm);
-        gap: 0;
-        width: 210mm;
-      }
-
-      .nametag {
-        height: 60mm;
-        border: 1px dashed #cccccc;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        page-break-inside: avoid;
-        margin: 0;
-        padding: 2mm;
-        box-sizing: border-box;
-      }
-
-      @media print {
-        html,
-        body {
-          width: 210mm;
-          height: 297mm;
-        }
-
-        body {
-          margin: 0;
-        }
-
-        .no-print {
-          display: none;
-        }
       }
 
       .no-print {
-        padding: 20px;
-        background-color: #f5f5f5;
-        border-radius: 8px;
-        margin: 20px;
+        display: none;
       }
+    }
 
-      input[type="file"] {
-        display: block;
-        margin-bottom: 15px;
-        width: 100%;
-        max-width: 400px;
-      }
+    .no-print {
+      padding: 20px;
+      background-color: #f5f5f5;
+      border-radius: 8px;
+      margin: 20px;
+    }
 
-      input[type="number"] {
-        padding: 8px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        margin: 0 10px;
-        width: 80px;
-      }
+    input[type="file"] {
+      display: block;
+      margin-bottom: 15px;
+      width: 100%;
+      max-width: 400px;
+    }
 
-      button {
-        background-color: #4caf50;
-        color: white;
-        padding: 8px 16px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        margin-right: 10px;
-        font-family: inherit;
-      }
+    input[type="number"] {
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin: 0 10px;
+      width: 80px;
+    }
 
-      button:hover {
-        background-color: #45a049;
-      }
+    button {
+      background-color: #4caf50;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-right: 10px;
+      font-family: inherit;
+    }
 
-      button:last-child {
-        background-color: #2196f3;
-      }
+    button:hover {
+      background-color: #45a049;
+    }
 
-      button:last-child:hover {
-        background-color: #1976d2;
-      }
+    button:last-child {
+      background-color: #2196f3;
+    }
 
-      label {
-        font-weight: 500;
-      }
-    </style>
-  </head>
+    button:last-child:hover {
+      background-color: #1976d2;
+    }
 
-  <body>
-    <div class="no-print" style="margin-bottom: 20px">
-      <div class="input-group">
-        <label for="fileInput">엑셀 파일:</label>
-        <input type="file" id="fileInput" accept=".xlsx, .xls, .csv" onchange="onFileChange(event)" />
-      </div>
+    label {
+      font-weight: 500;
+    }
+  </style>
+</head>
 
-      <div class="input-group">
-        <label for="cardWidth">명찰 가로 (mm):</label>
-        <input type="number" id="cardWidth" value="90" min="1" onchange="updateCardSize()" />
-
-        <label for="cardHeight">명찰 세로 (mm):</label>
-        <input type="number" id="cardHeight" value="60" min="1" onchange="updateCardSize()" />
-      </div>
-
-      <div class="input-group">
-        <label for="count">빈 명찰 개수:</label>
-        <input type="number" id="count" value="0" min="0" />
-      </div>
-
-      <hr style="margin-top: 20px; margin-bottom: 20px" />
-
-      <div class="button-group">
-        <button onclick="generateCards()">명찰 생성</button>
-        <button onclick="window.print()">인쇄</button>
-      </div>
+<body>
+  <div class="no-print" style="margin-bottom: 20px">
+    <div class="input-group">
+      <label for="fileInput">엑셀 파일:</label>
+      <input type="file" id="fileInput" accept=".xlsx, .xls, .csv" onchange="onFileChange(event)" />
     </div>
-    <div id="card-container" class="nametag-container"></div>
 
-    <script lang="javascript" src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+    <div class="input-group">
+      <label for="cardWidth">명찰 가로 (mm):</label>
+      <input type="number" id="cardWidth" value="90" min="1" onchange="updateCardSize()" />
 
-    <script>
-      let data = {};
+      <label for="cardHeight">명찰 세로 (mm):</label>
+      <input type="number" id="cardHeight" value="60" min="1" onchange="updateCardSize()" />
+    </div>
 
-      function updateCardSize() {
-        const width = document.getElementById("cardWidth").value;
-        const height = document.getElementById("cardHeight").value;
-        const container = document.getElementById("card-container");
-        const cards = document.getElementsByClassName("nametag");
+    <div class="input-group">
+      <label for="count">빈 명찰 개수:</label>
+      <input type="number" id="count" value="0" min="0" />
+    </div>
 
-        // 컨테이너의 그리드 컬럼 크기 업데이트
-        container.style.gridTemplateColumns = `repeat(auto-fit, ${width}mm)`;
+    <hr style="margin-top: 20px; margin-bottom: 20px" />
 
-        // 각 카드의 높이 업데이트
-        Array.from(cards).forEach((card) => {
-          card.style.width = `${width}mm`;
-          card.style.height = `${height}mm`;
-        });
-      }
+    <div class="button-group">
+      <button onclick="generateCards()">명찰 생성</button>
+      <button onclick="window.print()">인쇄</button>
+    </div>
+    <a href="youtube://www.youtube.com/watch?v=dQw4w9WgXcQ">유튜브 앱에서 열기</a>
+    <a href="instagram://user?username=clvudcjdsus">인스타그램 앱에서 열기</a>
 
-      const onFileChange = (e) => {
-        const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.readAsArrayBuffer(file);
-        reader.onload = (e) => {
-          const workbook = XLSX.read(e.target.result);
-          const sheetName = workbook.SheetNames[0];
-          const worksheet = workbook.Sheets[sheetName];
-          const rawData = XLSX.utils.sheet_to_json(worksheet);
-          const formattedData = {
-            names: rawData.map((row) => ({
-              name: row["name"],
-              catname: row["catname"],
-            })),
-          };
-          data = formattedData;
+  </div>
+  <div id="card-container" class="nametag-container"></div>
+
+  <script lang="javascript" src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+
+  <script>
+    let data = {};
+
+    function updateCardSize() {
+      const width = document.getElementById("cardWidth").value;
+      const height = document.getElementById("cardHeight").value;
+      const container = document.getElementById("card-container");
+      const cards = document.getElementsByClassName("nametag");
+
+      // 컨테이너의 그리드 컬럼 크기 업데이트
+      container.style.gridTemplateColumns = `repeat(auto-fit, ${width}mm)`;
+
+      // 각 카드의 높이 업데이트
+      Array.from(cards).forEach((card) => {
+        card.style.width = `${width}mm`;
+        card.style.height = `${height}mm`;
+      });
+    }
+
+    const onFileChange = (e) => {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.readAsArrayBuffer(file);
+      reader.onload = (e) => {
+        const workbook = XLSX.read(e.target.result);
+        const sheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[sheetName];
+        const rawData = XLSX.utils.sheet_to_json(worksheet);
+        const formattedData = {
+          names: rawData.map((row) => ({
+            name: row["name"],
+            catname: row["catname"],
+          })),
         };
+        data = formattedData;
       };
+    };
 
-      async function generateCards() {
-        try {
-          const excelFile = document.getElementById("fileInput").files[0];
-          if (!excelFile) throw new Error("엑셀 파일을 선택해주세요.");
-          const names = data.names || [];
-          const count = document.getElementById("count").value;
-          const emptyNames = Array.from({ length: count }, () => ({ name: "", catname: "" }));
-          const allNames = [...names, ...emptyNames];
+    async function generateCards() {
+      try {
+        const excelFile = document.getElementById("fileInput").files[0];
+        if (!excelFile) throw new Error("엑셀 파일을 선택해주세요.");
+        const names = data.names || [];
+        const count = document.getElementById("count").value;
+        const emptyNames = Array.from({ length: count }, () => ({ name: "", catname: "" }));
+        const allNames = [...names, ...emptyNames];
 
-          const container = document.getElementById("card-container");
-          container.innerHTML = "";
+        const container = document.getElementById("card-container");
+        container.innerHTML = "";
 
-          if (Array.isArray(names) && names.length > 0) {
-            allNames.forEach((name) => {
-              if (name) {
-                const card = document.createElement("div");
-                card.className = "nametag";
-                card.innerHTML = `
+        if (Array.isArray(names) && names.length > 0) {
+          allNames.forEach((name) => {
+            if (name) {
+              const card = document.createElement("div");
+              card.className = "nametag";
+              card.innerHTML = `
                   <div>
                     <div style="font-size: 4rem; font-weight: bold; letter-spacing: 0.1em;">${name.name}</div>
                     <div style="font-size: 2rem; margin-top: 10px;">${name.catname}</div>
                   </div>
                 `;
-                container.appendChild(card);
-              }
-            });
-          }
-          // 카드 생성 후 크기 업데이트
-          updateCardSize();
-        } catch (error) {
-          alert("명찰을 생성하는데 실패했습니다: " + error.message);
+              container.appendChild(card);
+            }
+          });
         }
+        // 카드 생성 후 크기 업데이트
+        updateCardSize();
+      } catch (error) {
+        alert("명찰을 생성하는데 실패했습니다: " + error.message);
       }
-    </script>
-  </body>
+    }
+  </script>
+</body>
+
 </html>

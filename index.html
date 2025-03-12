@@ -137,8 +137,10 @@
       <button onclick="generateCards()">명찰 생성</button>
       <button onclick="window.print()">인쇄</button>
     </div>
-    <a href="youtube://www.youtube.com/watch?v=dQw4w9WgXcQ">유튜브 앱에서 열기</a>
-    <a href="instagram://user?username=clvudcjdsus">인스타그램 앱에서 열기</a>
+    <div style="margin-top: 15px;">
+      <a href="vnd.youtube://dQw4w9WgXcQ" id="youtubeLink">유튜브 앱에서 열기</a><br>
+      <a href="instagram://user?username=clvudcjdsus">인스타그램 앱에서 열기</a>
+    </div>
 
   </div>
   <div id="card-container" class="nametag-container"></div>
@@ -146,6 +148,29 @@
   <script lang="javascript" src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 
   <script>
+    function getMobileOperatingSystem() {
+      const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+      if (/android/i.test(userAgent)) {
+        return "Android";
+      }
+
+      if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+        return "iOS";
+      }
+
+      return "unknown";
+    }
+
+    window.onload = function () {
+      const youtubeLink = document.getElementById('youtubeLink');
+      const videoId = 'dQw4w9WgXcQ';
+
+      if (getMobileOperatingSystem() === 'Android') {
+        youtubeLink.href = `intent://www.youtube.com/watch?v=${videoId}#Intent;package=com.google.android.youtube;scheme=https;end;`;
+      }
+    };
+
     let data = {};
 
     function updateCardSize() {

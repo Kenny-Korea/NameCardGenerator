@@ -227,8 +227,8 @@
               card.className = "nametag";
               card.innerHTML = `
                   <div>
-                    <div style="font-size: 4rem; font-weight: bold; letter-spacing: 0.1em;">${name.name}</div>
-                    <div style="font-size: 2rem; margin-top: 10px;">${name.catname}</div>
+                    <div style="font-size: 4rem; font-weight: bold; letter-spacing: 0.1em;">${name.name || ""}</div>
+                    <div style="font-size: 2rem; margin-top: 10px;">${name.catname || ""}</div>
                   </div>
                 `;
               container.appendChild(card);
